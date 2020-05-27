@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.Space) && ableToPush)
 		{
-			Vector3 origin = new Vector3(transform.position.x, 1.5f, transform.position.z);
+			Vector3 origin = new Vector3(transform.position.x, 1.1f, transform.position.z);
 			Vector3 rayDirection = transform.forward;
 			RaycastHit hitInfo;
 			Ray ray = new Ray(origin, rayDirection);

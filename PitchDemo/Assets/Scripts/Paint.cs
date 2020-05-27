@@ -85,4 +85,12 @@ public class Paint : MonoBehaviour
 			transform.forward = halfRotation * collision.transform.forward;
 		}
 	}
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == ("Wall"))
+		{
+			Destroy(gameObject);
+		}
+
+	}
 }
