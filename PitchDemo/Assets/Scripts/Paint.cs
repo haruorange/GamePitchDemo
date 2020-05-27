@@ -47,23 +47,32 @@ public class Paint : MonoBehaviour
 	{
 		if (isCastingRay)
 		{
-			rb.isKinematic = false;
-			rb.velocity = transform.forward * moveSpeed;
+			StartPainting();
 		}
 		else
 		{
-			rb.velocity = Vector3.zero;
-			rb.isKinematic = true;
+			StopPainting();
 		}
 		
 	}
 
-	private void OnCollisionEnter(Collision collision)
+	public void StartPainting()
 	{
-		if(collision.collider.tag == "Wall")
-		{
-			rb.velocity = Vector3.zero;
-			rb.isKinematic = true;
-		}
+		rb.isKinematic = false;
+		rb.velocity = transform.forward * moveSpeed;
 	}
+
+	public void StopPainting()
+	{
+		rb.velocity = Vector3.zero;
+		rb.isKinematic = true;
+	}
+	//private void OnCollisionEnter(Collision collision)
+	//{
+	//	if(collision.collider.tag == "Wall")
+	//	{
+	//		rb.velocity = Vector3.zero;
+	//		rb.isKinematic = true;
+	//	}
+	//}
 }
