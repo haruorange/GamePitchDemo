@@ -75,4 +75,14 @@ public class Paint : MonoBehaviour
 	//		rb.isKinematic = true;
 	//	}
 	//}
+
+	private void OnCollisionEnter(Collision collision)
+	{
+		if(collision.collider.tag == "Rebound")
+		{
+			Debug.Log("yes");
+			Quaternion halfRotation = Quaternion.FromToRotation(-transform.forward, collision.transform.forward);
+			transform.forward = halfRotation * collision.transform.forward;
+		}
+	}
 }

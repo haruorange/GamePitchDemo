@@ -5,7 +5,8 @@ using UnityEngine;
 public class Teleport : MonoBehaviour
 {
 	private Transform exitTransform;
-	[SerializeField] GameObject paint;
+	[SerializeField] private GameObject paint;
+	[SerializeField] private float secondsToWait = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +21,7 @@ public class Teleport : MonoBehaviour
 
 	IEnumerator PaintTeleport()
 	{
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(secondsToWait);
 		paint.transform.forward = exitTransform.forward;
 		paint.transform.position = exitTransform.position + exitTransform.forward * 1f;
 
