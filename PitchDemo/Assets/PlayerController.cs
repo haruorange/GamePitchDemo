@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private float rotateSpeed = 4f;
 	[SerializeField] private float moveSpeed = 8f;
 	[SerializeField] private bool ableToPush = false;
+	[SerializeField] private LayerMask layermask;
+
+	private const float MAX_RAY_DISTANCE = 100f;
 	private Rigidbody rb;
 	// Start is called before the first frame update
 	void Start()
@@ -18,6 +21,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 		Move();
+		Push();
     }
 
 	void Move()
@@ -33,9 +37,21 @@ public class PlayerController : MonoBehaviour
 		rb.velocity = heading * moveSpeed;
 	}
 
-	void push()
+	void Push()
 	{
+		if (Input.GetKeyDown(KeyCode.Space) && ableToPush)
+		{
+			Vector3 origin = new Vector3(transform.position.x, 0.5f, transform.position.z);
+			Vector3 rayDirection = transform.forward;
+			RaycastHit hitInfo;
+			Ray ray = new Ray(origin, rayDirection);
 
+			if (Physics.Raycast(ray, out hitInfo, MAX_RAY_DISTANCE, layermask))
+			{
+				hitInfo.transform.forward = transform.forward;
+				hitInfo.transform.GetComponent<Paint>().isCastingRay = true;
+			}
+		}
 	}
 
 	private void OnTriggerEnter(Collider other)

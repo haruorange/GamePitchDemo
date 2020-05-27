@@ -6,19 +6,23 @@ public class Paint : MonoBehaviour
 {
 	private Material thisMaterial;
 	[SerializeField] private LayerMask layermask;
-	[SerializeField] public bool isCastingRay = false;
+	public bool isCastingRay = false;
+	[SerializeField] private float moveSpeed = 10f;
 
+	private Rigidbody rb;
 	private const float MAX_RAY_DISTANCE = 100f;
 	// Start is called before the first frame update
 	void Start()
     {
 		thisMaterial = GetComponent<Renderer>().material;
+		rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
 		RayDetect();
+		Move();
     }
 
 	void RayDetect()
@@ -37,5 +41,29 @@ public class Paint : MonoBehaviour
 
 		}
 
+	}
+
+	void Move()
+	{
+		if (isCastingRay)
+		{
+			rb.isKinematic = false;
+			rb.velocity = transform.forward * moveSpeed;
+		}
+		else
+		{
+			rb.velocity = Vector3.zero;
+			rb.isKinematic = true;
+		}
+		
+	}
+
+	private void OnCollisionEnter(Collision collision)
+	{
+		if(collision.collider.tag == "Wall")
+		{
+			rb.velocity = Vector3.zero;
+			rb.isKinematic = true;
+		}
 	}
 }
